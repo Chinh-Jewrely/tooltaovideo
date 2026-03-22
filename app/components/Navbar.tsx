@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useTheme } from './ThemeProvider';
 
 const navItems = [
     { label: 'Tổng Quan', href: '#overview' },
@@ -12,7 +13,7 @@ const navItems = [
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
+    const { theme, toggle } = useTheme();
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 40);
@@ -28,35 +29,55 @@ export default function Navbar() {
             backdropFilter: scrolled ? 'blur(20px)' : 'none',
             borderBottom: scrolled ? '1px solid rgba(255,255,255,0.08)' : 'none',
         }}>
-            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68, gap: 12 }}>
                 {/* Logo */}
-                <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+                <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}>
                     <div style={{
                         width: 38, height: 38, borderRadius: 10,
                         background: 'linear-gradient(135deg, #7C3AED, #EC4899)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 18, boxShadow: '0 4px 16px rgba(124,58,237,0.5)'
+                        fontSize: 18, boxShadow: '0 4px 16px rgba(124,58,237,0.5)',
                     }}>🎬</div>
-                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: 18, color: '#fff', letterSpacing: '-0.3px' }}>
+                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: 18, letterSpacing: '-0.3px' }}>
                         Tooltao<span style={{ background: 'linear-gradient(135deg, #A855F7, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Video</span>
                     </span>
                 </a>
 
-                {/* Desktop Nav */}
-                <div style={{ display: 'flex', gap: 6, alignItems: 'center' }} className="desktop-nav">
+                {/* Desktop Nav Links */}
+                <div style={{ display: 'flex', gap: 4, alignItems: 'center' }} className="desktop-nav">
                     {navItems.map(item => (
                         <a key={item.href} href={item.href} className="nav-link"
-                            style={{ padding: '6px 14px', borderRadius: 8, transition: 'all 0.2s' }}
+                            style={{ padding: '6px 12px', borderRadius: 8, transition: 'all 0.2s', fontSize: 13 }}
                             onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.07)')}
                             onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                         >{item.label}</a>
                     ))}
                 </div>
 
-                {/* CTA */}
-                <a href="#pricing" className="btn-primary" style={{ fontSize: 14, padding: '10px 22px', textDecoration: 'none' }}>
-                    Xem Demo Ngay →
-                </a>
+                {/* Right: theme toggle + CTA */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+                    {/* Theme Toggle 🌙 ☀️ */}
+                    <button
+                        onClick={toggle}
+                        className="theme-toggle"
+                        title={theme === 'dark' ? 'Chế độ sáng' : 'Chế độ tối'}
+                        aria-label="Toggle dark/light mode"
+                    >
+                        <span style={{
+                            fontSize: 18,
+                            display: 'inline-block',
+                            transition: 'transform 0.45s cubic-bezier(0.34,1.56,0.64,1)',
+                            transform: theme === 'dark' ? 'rotate(0deg) scale(1)' : 'rotate(360deg) scale(1.1)',
+                        }}>
+                            {theme === 'dark' ? '🌙' : '☀️'}
+                        </span>
+                    </button>
+
+                    {/* CTA */}
+                    <a href="#live-demo" className="btn-primary" style={{ fontSize: 14, padding: '10px 22px', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                        Thử Ngay →
+                    </a>
+                </div>
             </div>
 
             <style>{`@media(max-width:900px){.desktop-nav{display:none!important}}`}</style>

@@ -44,7 +44,7 @@ export default function Pricing() {
             </div>
 
             {/* Plans */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 60 }}>
+            <div className="pricing-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 60 }}>
                 {plans.map(plan => (
                     <div key={plan.id} onClick={() => setSelected(plan.id)} style={{
                         position: 'relative', padding: '28px 24px', borderRadius: 24, cursor: 'pointer', transition: 'all 0.3s',
@@ -91,7 +91,7 @@ export default function Pricing() {
                 <h3 style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 800, fontSize: 24, marginBottom: 8 }}>💳 Nạp Thêm Credits (Top-up)</h3>
                 <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>Không giới hạn tần suất — dùng hết là nạp thêm ngay</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+            <div className="topup-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
                 {topups.map(t => (
                     <div key={t.credits} className="glass" style={{ padding: '22px 20px', textAlign: 'center', position: 'relative', borderRadius: 18, cursor: 'pointer', transition: 'all 0.2s' }}
                         onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.1)'; (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)'; }}

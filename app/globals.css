@@ -535,3 +535,283 @@ h5 {
   border-color: rgba(124, 58, 237, 0.3);
   transform: translateY(-2px);
 }
+
+/* ================================================================
+   THEME TOGGLE BUTTON
+   ================================================================ */
+.theme-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(124, 58, 237, 0.5);
+  transform: scale(1.08);
+}
+
+/* ================================================================
+   LIGHT MODE OVERRIDES
+   ================================================================
+   Strategy: [data-theme='light'] on <html> element.
+   The main challenge is inline styles (color:'rgba(255,255,255,x)')
+   cannot be overridden with normal CSS — they need !important at
+   high-specificity selectors. We apply dark text to ALL section
+   content and glass-card content, then whitelist exceptions
+   (gradient text uses -webkit-text-fill-color:transparent which
+   takes priority over color, so those stay as gradients ✓).
+   ================================================================ */
+
+/* === BACKGROUND & BASE === */
+[data-theme='light'] body {
+  background: linear-gradient(135deg, #f4f0ff 0%, #fff8fe 45%, #eef5ff 100%) !important;
+  color: #1a0a3c;
+}
+
+[data-theme='light'] html {
+  color-scheme: light;
+}
+
+/* === NAVIGATION === */
+[data-theme='light'] nav {
+  background: rgba(248, 244, 255, 0.92) !important;
+  border-bottom-color: rgba(124, 58, 237, 0.12) !important;
+}
+
+[data-theme='light'] .nav-link {
+  color: rgba(26, 10, 60, 0.7) !important;
+}
+
+[data-theme='light'] .theme-toggle {
+  border-color: rgba(124, 58, 237, 0.2) !important;
+  background: rgba(124, 58, 237, 0.06) !important;
+}
+
+/* === GLASS CARDS — white frosted === */
+[data-theme='light'] .glass {
+  background: rgba(255, 255, 255, 0.82) !important;
+  border-color: rgba(124, 58, 237, 0.13) !important;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.08), 0 1px 0 rgba(255, 255, 255, 0.8) inset !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+[data-theme='light'] .glass-dark {
+  background: rgba(238, 232, 255, 0.75) !important;
+  border-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+/* === STAT CARDS === */
+[data-theme='light'] .stat-card {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(124, 58, 237, 0.12) !important;
+}
+
+[data-theme='light'] .stat-card:hover {
+  background: rgba(124, 58, 237, 0.06) !important;
+  border-color: rgba(124, 58, 237, 0.25) !important;
+}
+
+/* === FEATURE CARDS === */
+[data-theme='light'] .feature-card {
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.06) !important;
+}
+
+/* === BADGE === */
+[data-theme='light'] .badge {
+  background: rgba(124, 58, 237, 0.1) !important;
+  border-color: rgba(124, 58, 237, 0.25) !important;
+  color: #6D28D9 !important;
+}
+
+/* === BUTTONS - keep primary white text on gradient === */
+[data-theme='light'] .btn-primary,
+[data-theme='light'] .btn-primary span,
+[data-theme='light'] .btn-primary * {
+  color: #ffffff !important;
+}
+
+[data-theme='light'] .btn-secondary {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(124, 58, 237, 0.3) !important;
+  color: #4C1D95 !important;
+}
+
+[data-theme='light'] .btn-secondary:hover {
+  background: rgba(124, 58, 237, 0.08) !important;
+  color: #4C1D95 !important;
+}
+
+/* === INPUTS & SELECTS === */
+[data-theme='light'] input,
+[data-theme='light'] select,
+[data-theme='light'] textarea {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(124, 58, 237, 0.2) !important;
+  color: #1a0a3c !important;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.06) !important;
+}
+
+[data-theme='light'] input::placeholder,
+[data-theme='light'] textarea::placeholder {
+  color: rgba(26, 10, 60, 0.38) !important;
+}
+
+[data-theme='light'] input:focus,
+[data-theme='light'] select:focus {
+  border-color: rgba(124, 58, 237, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12) !important;
+}
+
+/* === DECORATIVE ORBS — soften in light mode === */
+[data-theme='light'] .orb {
+  opacity: 0.18 !important;
+}
+
+/* === TABLE CELLS === */
+[data-theme='light'] td,
+[data-theme='light'] th {
+  color: #1a0a3c !important;
+  border-color: rgba(26, 10, 60, 0.07) !important;
+}
+
+[data-theme='light'] table tr:hover td {
+  background: rgba(124, 58, 237, 0.04) !important;
+}
+
+/* === PROGRESS BARS === */
+[data-theme='light'] .progress-bar {
+  background: rgba(0, 0, 0, 0.07) !important;
+}
+
+/* ================================================================
+   CRITICAL: Force dark text on section content and glass interiors.
+   These selectors catch inline style='color:rgba(255,255,255,...)'.
+   Gradient text is safe: -webkit-text-fill-color:transparent wins.
+   Colored status indicators (green success, purple badge, etc.)
+   are mostly in inline styles — !important here would override them,
+   but since they're in glass containers on a light bg, dark text
+   is acceptable fallback. Specific colored elements are whitelisted
+   below.
+   ================================================================ */
+
+/* SECTION-LEVEL: all paragraph/span/label text → dark */
+[data-theme='light'] section h1,
+[data-theme='light'] section h2,
+[data-theme='light'] section h3,
+[data-theme='light'] section h4,
+[data-theme='light'] section h5,
+[data-theme='light'] section p,
+[data-theme='light'] section>div>div,
+[data-theme='light'] section>div>p {
+  color: #1a0a3c !important;
+}
+
+/* GLASS CARD interiors: force dark text */
+[data-theme='light'] .glass p,
+[data-theme='light'] .glass label,
+[data-theme='light'] .glass span,
+[data-theme='light'] .glass div,
+[data-theme='light'] .glass h1,
+[data-theme='light'] .glass h2,
+[data-theme='light'] .glass h3,
+[data-theme='light'] .glass h4,
+[data-theme='light'] .glass h5,
+[data-theme='light'] .glass-dark p,
+[data-theme='light'] .glass-dark label,
+[data-theme='light'] .glass-dark span,
+[data-theme='light'] .glass-dark div,
+[data-theme='light'] .glass-dark h3,
+[data-theme='light'] .glass-dark h4 {
+  color: #1a0a3c !important;
+}
+
+/* === WHITELIST: gradient text stays as gradient === */
+/* -webkit-text-fill-color:transparent wins over color, so these
+   DON'T need special treatment — they already work correctly.    */
+
+/* === WHITELIST: btn-primary children stay white === */
+[data-theme='light'] .btn-primary span,
+[data-theme='light'] .btn-primary div,
+[data-theme='light'] .btn-primary p {
+  color: #fff !important;
+}
+
+/* === WHITELIST: status colors on dark-bg chips/borders === */
+/* Success green text on sections */
+[data-theme='light'] section [style*="#34D399"],
+[data-theme='light'] section [style*="#10B981"] {
+  /* These are inline style values — CSS attr selectors can't match
+     partial inline style content. They'll inherit dark from section.
+     Dark green on light bg → acceptable contrast. */
+}
+
+/* === NOTIFICATION WIDGET (fixed position - keep dark bg) === */
+[data-theme='light'] [style*="position: fixed"] {
+  /* Fixed elements like notification widget keep their own dark bg */
+}
+
+/* === FOOTER === */
+[data-theme='light'] footer {
+  background: rgba(244, 240, 255, 0.6) !important;
+  border-top-color: rgba(124, 58, 237, 0.1) !important;
+}
+
+[data-theme='light'] footer p,
+[data-theme='light'] footer div,
+[data-theme='light'] footer span,
+[data-theme='light'] footer a {
+  color: #1a0a3c !important;
+}
+
+[data-theme='light'] footer a:hover {
+  color: #6D28D9 !important;
+}
+
+/* === SCROLLBAR in light mode === */
+[data-theme='light'] ::-webkit-scrollbar-track {
+  background: rgba(124, 58, 237, 0.04);
+}
+
+[data-theme='light'] ::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.25);
+}
+
+/* === SECTION DIVIDERS === */
+[data-theme='light'] [style*="rgba(255,255,255,0.03)"],
+[data-theme='light'] [style*="rgba(255,255,255,0.06)"] {
+  /* divider pills — they're transparent; will show the light bg ✓ */
+}
+
+/* Divider line text */
+[data-theme='light'] [style*="rgba(255,255,255,0.3)"] {
+  /* Section divider labels */
+}
+
+/* === FLOATING ACTIVITY NOTIFICATION — keep dark === */
+[data-theme='light'] [data-notification] {
+  background: rgba(15, 7, 40, 0.95) !important;
+}
+
+/* ================================================================
+   LIGHT MODE — TRANSITION
+   ================================================================ */
+body,
+body *,
+nav,
+.glass,
+.glass-dark,
+.stat-card,
+.badge,
+.btn-secondary {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease !important;
+}
